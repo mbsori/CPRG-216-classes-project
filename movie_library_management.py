@@ -1,11 +1,11 @@
 import os
 from movie import Movie, print_genres
-
+ 
 GENRES = ["Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Romance",
           "Thriller", "Animation", "Documentary", "Fantasy"]
-
+ 
 SEPARATOR = "-" * 104
-
+ 
 def load_movies(file_name):
     movies = []
     file = open(file_name, "r")
@@ -20,10 +20,9 @@ def load_movies(file_name):
             movies.append(movie)
             count += 1
     file.close()
-    print(f'The catalog file "{file_name}" successfully loaded {count} movies to the Movie Library System')
     return True, movies
-
-
+ 
+ 
 def save_movies(file_name, movies):
     file = open(file_name, "w")
     count = 0
@@ -75,11 +74,10 @@ def find_movie_by_id(movies, movie_id):
     for movie in movies:
         if movie.get_id() == movie_id:
             return movie
-    return -1
+    return None
  
  
 def search_movies(movies, search_term):
-    print(f'Searching for "{search_term.lower()}" in title, director, or genre...')
     found = []
     lower_term = search_term.lower()
     for movie in movies:
@@ -94,11 +92,11 @@ def search_movies(movies, search_term):
 def rent_movie(movies, movie_id):
     """
     Rent a movie by its ID if it is available.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
     movie_id (str): The ID of the movie to rent.
-
+ 
     Returns:
     str: A string indicating the result of the rental attempt.
     """
@@ -109,16 +107,16 @@ def rent_movie(movies, movie_id):
         return f"\n'{movie.get_title()}' rented successfully."
     else:
         return f"\n'{movie.get_title()}' is already rented - cannot be rented again."
-
-
+ 
+ 
 def return_movie(movies, movie_id):
     """
     Return a rented movie by its ID.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
     movie_id (str): The ID of the movie to return.
-
+ 
     Returns:
     str: A string indicating the result of the return attempt.
     """
@@ -129,15 +127,15 @@ def return_movie(movies, movie_id):
         return f"\n'{movie.get_title()}' was returned successfully."
     else:
         return f"\n'{movie.get_title()}' was not rented - cannot be returned."
-
-
+ 
+ 
 def add_movie(movies):
     """
     Add a new movie to the library.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
-
+ 
     Returns:
     str: A string indicating the result of the add attempt.
     """
@@ -151,15 +149,15 @@ def add_movie(movies):
     price = float(input("Enter price: "))
     movies.append(Movie(id_, title, director, genre, True, price, 0))
     return f"Movie '{title}' added to library successfully."
-
-
+ 
+ 
 def remove_movie(movies):
     """
     Remove a movie from the library by its ID.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
-
+ 
     Returns:
     str: A string indicating the result of the remove attempt.
     """
@@ -169,15 +167,15 @@ def remove_movie(movies):
         movies.remove(movie)
         return f"\nMovie '{movie.get_title()}' has been removed from library successfully."
     return f"\nMovie with ID {id} not found in library - cannot be removed."
-
-
+ 
+ 
 def update_movie_details(movies):
     """
     Update the details of a movie by its ID.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
-
+ 
     Returns:
     str: A string indicating the result of the update attempt.
     """
@@ -185,7 +183,7 @@ def update_movie_details(movies):
     movie = find_movie_by_id(movies, id)
     if movie is None:
         return f"Movie with ID {id} not found in library."
-
+ 
     print("Leave fields blank to keep current values.")
     title = input(f"Enter new title (current: {movie.get_title()}): ") or movie.get_title()
     director = input(f"Enter new director (current: {movie.get_director()}): ") or movie.get_director()
@@ -199,20 +197,20 @@ def update_movie_details(movies):
         genre = movie.get_genre()
     price_input = input(f"Enter new price (current: {movie.get_price()}): ")
     price = float(price_input) if price_input else movie.get_price()
-
+ 
     movie.set_title(title)
     movie.set_director(director)
     movie.set_genre(genre)
     movie.set_price(price)
-
+ 
     return f"Movie with ID {id} is updated successfully."
 def list_movies_by_genre(movies):
     """
     List all movies of a specified genre.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
-
+ 
     Returns:
     None
     """
@@ -226,12 +224,12 @@ def list_movies_by_genre(movies):
                 print("\nInvalid Genre: Enter a valid genre (0-9)")
         else:
             print("\nInvalid Genre: Enter a valid genre (0-9)")
-    
+   
     genre_movies = []
     for movie in movies:
         if movie.get_genre() == genre:
             genre_movies.append(movie)
-
+ 
     if genre_movies:
         print(f"\n{'ID':<4} {'Title':<25} {'Director':<20} {'Genre':<10} {'Availability':<10} {'Price':>6} {'# Rentals':>12}")
         print(SEPARATOR)
@@ -239,14 +237,14 @@ def list_movies_by_genre(movies):
             print(f"{movie.get_id():<4} {movie.get_title():<25} {movie.get_director():<20} {movie.get_genre_name():<10} {movie.get_availability():<10} {movie.get_price():>7} {movie.get_rental_count():>12}")
     else:
         print("No movies found for the selected genre.")
-
+ 
 def check_availability_by_genre(movies):
     """
     Check and display the availability of movies in a specified genre.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
-
+ 
     Returns:
     None
     """
@@ -256,7 +254,7 @@ def check_availability_by_genre(movies):
     for movie in movies:
         if movie.get_genre() == genre and movie.get_availability() == "Available":
             available_movies.append(movie)
-    
+   
     if available_movies:
         print(f"\n{'ID':<4} {'Title':<20} {'Director':<25} {'Genre':<15} {'Availability':<15} {'Price':<6} {'# Rentals':>12}")
         print(SEPARATOR)
@@ -264,14 +262,14 @@ def check_availability_by_genre(movies):
             print(f"{movie.get_id():<4} {movie.get_title():<20} {movie.get_director():<25} {movie.get_genre_name():<15} {movie.get_availability():<15} {movie.get_price():<6} {movie.get_rental_count():>10}")
     else:
         print("\nNo available movies in this genre.")
-
+ 
 def display_library_summary(movies):
     """
     Display a summary of the library.
-
+ 
     Parameters:
     movies (list): A list of Movie objects.
-
+ 
     Returns:
     None
     """
@@ -283,33 +281,33 @@ def display_library_summary(movies):
             available_movies += 1
         else:
             rented_movies += 1
-    
+   
     print(f"{'\nTotal movies:':<20} {total_movies}")
     print(f"{'Available movies:':<19} {available_movies}")
     print(f"{'Rented movies:':<19} {rented_movies}")
-
+ 
 def popular_movies(movies):
     """
     Displays all the movies that have a rental_count >= to the entered value.
-    
+   
     Parameters:
     - movies: A list of Movie objects.
-    
+   
     Return Value: None.
     """
     min_rental_count = input("Enter the minimum number of rentals for the movies you want to view: ")
-    
+   
     if not min_rental_count.isdigit():
         print("Invalid input. Please enter a valid number.")
         return
-    
+   
     min_rental_count = int(min_rental_count)
     popular_movies_list = []
-
+ 
     for movie in movies:
         if movie.get_rental_count() >= min_rental_count:
             popular_movies_list.append(movie)
-
+ 
     if not popular_movies_list:
         print(f"No movies found with a rental count of {min_rental_count} or more.")
     else:
@@ -318,13 +316,14 @@ def popular_movies(movies):
         print(SEPARATOR)
         for movie in popular_movies_list:
             print(f"{movie.get_id():<4} {movie.get_title():<30} {movie.get_director():<20} {movie.get_genre_name():>15} {movie.get_rental_count():>20}")
-
+ 
+ 
 def main():
     """
     The main function that runs the Movie Library Management System.
     It loads movies from a file, displays the menu, and handles user interactions.
     """
-
+ 
     while True:
         file_name = input("Enter the movie catalog filename: ")
         if not os.path.isfile(file_name):
@@ -339,14 +338,15 @@ def main():
                 movies = []
                 break
         else:
-            movies = load_movies(file_name)
+            success, movies = load_movies(file_name)
+            print(f'The catalog file "{file_name}" successfully loaded {len(movies)} movies to the Movie Library System')
             break
-
+ 
     running = True
-
+ 
     while running:
         choice = print_menu()  # Call to print_menu function
-
+ 
         if choice == '0':
             update_catalog = input("Would you like to update the catalog (Yes/Y, No/N))? ").lower()
             if update_catalog in ['yes', 'y']:
@@ -356,6 +356,7 @@ def main():
             running = False
         elif choice == '1':
             search_term = input("Enter search term: ")
+            print(f'\nSearching for "{search_term}" in title, director, or genre...')
             search_movies(movies, search_term)
         elif choice == '2':
             movie_id = input("Enter the movie ID to rent: ")
@@ -379,6 +380,6 @@ def main():
             display_library_summary(movies)
         else:
             print("Invalid choice. Please try again.")
-
+ 
 if __name__ == "__main__":
     main()
