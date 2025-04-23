@@ -319,7 +319,6 @@ def popular_movies(movies):
         for movie in popular_movies_list:
             print(f"{movie.get_id():<4} {movie.get_title():<30} {movie.get_director():<20} {movie.get_genre_name():>15} {movie.get_rental_count():>20}")
 
-
 def main():
     """
     The main function that runs the Movie Library Management System.
@@ -340,8 +339,7 @@ def main():
                 movies = []
                 break
         else:
-            success, movies = load_movies(file_name)
-            print(f'The catalog file "{file_name}" successfully loaded {len(movies)} movies to the Movie Library System')
+            movies = load_movies(file_name)
             break
 
     running = True
@@ -355,7 +353,7 @@ def main():
                 save_movies(file_name, movies)
                 print(f"{len(movies)} movies have been written to Movie catalog.")
             print("Movie Library System Closed Successfully")
-            running = False
+                  running = False
         elif choice == '1':
             search_term = input("Enter search term: ")
             print(f'\nSearching for "{search_term}" in title, director, or genre...')
