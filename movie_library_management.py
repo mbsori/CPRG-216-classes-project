@@ -356,7 +356,6 @@ def main():
                   running = False
         elif choice == '1':
             search_term = input("Enter search term: ")
-            print(f'\nSearching for "{search_term}" in title, director, or genre...')
             search_movies(movies, search_term)
         elif choice == '2':
             movie_id = input("Enter the movie ID to rent: ")
