@@ -3,9 +3,8 @@ import os
 
 GENRES = ["Action", "Comedy", "Drama", "Horror", "Sci-Fi", "Romance",
           "Thriller", "Animation", "Documentary", "Fantasy"]
-
 def load_movies(file_name):
-    movie_list = []
+    movies = []
     file = open(file_name, "r")
     count = 0
     for line in file:
@@ -15,17 +14,19 @@ def load_movies(file_name):
                 int(parts[0]), parts[1], parts[2], int(parts[3]),
                 parts[4].lower() == "true", float(parts[5]), int(parts[6])
             )
-            movie_list.append(movie)
+            movies.append(movie)
             count += 1
     file.close()
-    print("The catalog file \"" + file_name + "\" successfully loaded " + str(count) + " movies to the Movie Library System")
-    return movie_list
+    print(f'The catalog file "{file_name}" successfully loaded {count} movies to the Movie Library System')
+    return movies
 
 def save_movies(file_name, movies):
     file = open(file_name, "w")
     count = 0
-    for m in movies:
-        file.write(f"{m.get_id()},{m.get_title()},{m.get_director()},{m.get_genre()},{str(m.get_availability() == 'Available')},{m.get_price()},{m.get_rental_count()}\n")
+    for movie in movies:
+        file.write(f"{movie.get_id()},{movie.get_title()},{movie.get_director()},"
+                   f"{movie.get_genre()},{str(movie.get_availability() == 'Available')},"
+                   f"{movie.get_price()},{movie.get_rental_count()}\n")
         count += 1
     file.close()
     return count
@@ -59,22 +60,24 @@ def get_genre():
 def print_movies(movies):
     print("\nID        Title                         Director                 Genre           Availability     Price   # Rentals")
     print("---------------------------------------------------------------------------------------------------------------------")
-    for m in movies:
-        print(m)
+    for movie in movies:
+        print(movie)
 
 def find_movie_by_id(movies, movie_id):
-    for m in movies:
-        if m.get_id() == movie_id:
-            return m
+    for movie in movies:
+        if movie.get_id() == movie_id:
+            return movie
     return -1
 
 def search_movies(movies, search_term):
     print(f'Searching for "{search_term.lower()}" in title, director, or genre...')
     found = []
     lower_term = search_term.lower()
-    for m in movies:
-        if lower_term in m.get_title().lower() or lower_term in m.get_director().lower() or lower_term in m.get_genre_name().lower():
-            found.append(m)
+    for movie in movies:
+        if (lower_term in movie.get_title().lower()
+            or lower_term in movie.get_director().lower()
+            or lower_term in movie.get_genre_name().lower()):
+            found.append(movie)
     if not found:
         print("No matching movies found.")
     else:
