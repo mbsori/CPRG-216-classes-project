@@ -353,7 +353,7 @@ def main():
                 save_movies(file_name, movies)
                 print(f"{len(movies)} movies have been written to Movie catalog.")
             print("Movie Library System Closed Successfully")
-                  running = False
+            running = False
         elif choice == '1':
             search_term = input("Enter search term: ")
             search_movies(movies, search_term)
